@@ -814,6 +814,7 @@ public class ComponentController implements INotification {
         scannerListModel.addElement(scannerListItem);
         components.getScannerList().revalidate();
         components.getScannerList().repaint();
+        initializeDefaultValues();
       }
     });
   }
@@ -960,12 +961,29 @@ public class ComponentController implements INotification {
     }
   }
 
+
   private void scannerListSelectionChanged(ListSelectionEvent e) {
     if (!(e.getValueIsAdjusting())) {
       return;
     }
     @SuppressWarnings("unchecked")
     JList<ScannerListItem> scannerList = (JList<ScannerListItem>) e.getSource();
+    if (scannerList.getSelectedIndex() < 0) {
+      disableSettingsComponents();
+      disableScanButtons();
+      return;
+    }
+    disableSettingsComponents();
+    ScannerListItem scannerListItem = scannerList.getSelectedValue();
+    Scanner scanner = scannerListItem.getScanner();
+    adjustSettingsComponents(scanner);
+    enableScanButtons();
+    updateComponents(scannerListItem);
+  }
+
+  private void forceUpdateScanSelection() {
+    @SuppressWarnings("unchecked")
+    JList<ScannerListItem> scannerList = (JList<ScannerListItem>) this.components.getScannerList();
     if (scannerList.getSelectedIndex() < 0) {
       disableSettingsComponents();
       disableScanButtons();
@@ -988,6 +1006,14 @@ public class ComponentController implements INotification {
     this.components.getScannerList().setModel(scannerListModel);
     initComponentListeners();
     restorePreferences();
+    initializeDefaultValues();
+  }
+
+  private void initializeDefaultValues() {
+    if(this.components.getScannerList().getModel().getSize() > 0) {
+      this.components.getScannerList().setSelectedIndex(0);
+      this.forceUpdateScanSelection();
+    }
   }
 
   @Override

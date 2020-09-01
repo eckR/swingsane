@@ -40,7 +40,7 @@ public final class KnownSaneOptions {
 
     blackThresholdModel.setMaximum(maxInt);
     blackThresholdModel.setMinimum(minInt);
-    blackThresholdModel.setStepSize(constraints.getQuantumInteger());
+    //blackThresholdModel.setStepSize(constraints.getQuantumInteger());
 
     blackThresholdModel.setValue(fixedOption.getValue());
 

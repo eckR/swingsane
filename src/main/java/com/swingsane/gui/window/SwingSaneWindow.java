@@ -311,7 +311,6 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
 
     actionsPanel = new JPanel();
     actionsPanel.setOpaque(false);
-    tabbedPane.addTab(Localizer.localize("ActionsTabTitle"), null, actionsPanel, null);
     GridBagLayout gbl_actionsPanel = new GridBagLayout();
     gbl_actionsPanel.columnWidths = new int[] { 680, 0 };
     gbl_actionsPanel.rowHeights = new int[] { 314, 150, 0 };
@@ -486,8 +485,8 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
     gbc_scanActionPanel.fill = GridBagConstraints.BOTH;
     gbc_scanActionPanel.anchor = GridBagConstraints.CENTER;
     gbc_scanActionPanel.gridx = 0;
-    gbc_scanActionPanel.gridy = 2;
-    scannersPanel.add(scanActionPanel, gbc_scanActionPanel);
+    gbc_scanActionPanel.gridy = 0;
+//    scannersPanel.add(scanActionPanel, gbc_scanActionPanel);
     GridBagLayout gbl_scanActionPanel = new GridBagLayout();
     gbl_scanActionPanel.columnWidths = new int[] { 0, 20, 0, 0, 0, 10, 0, 5, 0 };
     gbl_scanActionPanel.rowHeights = new int[] { 0, 0 };
@@ -653,7 +652,6 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
     settingsPanel = new JPanel();
     settingsPanel.setOpaque(false);
     settingsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-    tabbedPane.addTab(Localizer.localize("SettingsTabTitle"), null, settingsPanel, null);
     GridBagLayout gbl_settingsPanel = new GridBagLayout();
     gbl_settingsPanel.columnWidths = new int[] { 0, 0, 10, 0, 0, 0 };
     gbl_settingsPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -1212,6 +1210,8 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
     previewPanel.initialize();
     previewPanel.setOpaque(false);
     tabbedPane.addTab(Localizer.localize("PreviewTabTitle"), null, previewPanel, null);
+    tabbedPane.addTab(Localizer.localize("SettingsTabTitle"), null, settingsPanel, null);
+    tabbedPane.addTab(Localizer.localize("ActionsTabTitle"), null, actionsPanel, null);
 
     JPanel buttonPanel = new JPanel();
     buttonPanel.setBorder(new EmptyBorder(0, 12, 12, 12));
@@ -1226,10 +1226,11 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
     gbl_buttonPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
     gbl_buttonPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
     buttonPanel.setLayout(gbl_buttonPanel);
+    buttonPanel.add(scanActionPanel, gbc_scanActionPanel);
 
     quitButton = new JButton(Localizer.localize("Quit"));
     quitButton.setFont(UIManager.getFont("Button.font"));
-    quitButton.setMargin(new Insets(1, 5, 1, 5));
+    quitButton.setMargin(new Insets(1, 1, 1, 5));
     quitButton.setIcon(new ImageIcon(SwingSaneWindow.class
         .getResource("/com/famfamfam/silk/door_in.png")));
     quitButton.addActionListener(new ActionListener() {
@@ -1246,7 +1247,7 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
     globalSettingsButton.setMargin(new Insets(1, 5, 1, 5));
     GridBagConstraints gbc_globalSettingsButton = new GridBagConstraints();
     gbc_globalSettingsButton.insets = new Insets(0, 0, 0, 5);
-    gbc_globalSettingsButton.gridx = 0;
+    gbc_globalSettingsButton.gridx = 2;
     gbc_globalSettingsButton.gridy = 0;
     buttonPanel.add(globalSettingsButton, gbc_globalSettingsButton);
 
@@ -1263,9 +1264,8 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
     });
     GridBagConstraints gbc_aboutButton = new GridBagConstraints();
     gbc_aboutButton.insets = new Insets(0, 0, 0, 5);
-    gbc_aboutButton.gridx = 1;
+    gbc_aboutButton.gridx = 3;
     gbc_aboutButton.gridy = 0;
-    buttonPanel.add(aboutButton, gbc_aboutButton);
     GridBagConstraints gbc_quitButton = new GridBagConstraints();
     gbc_quitButton.fill = GridBagConstraints.VERTICAL;
     gbc_quitButton.anchor = GridBagConstraints.WEST;
